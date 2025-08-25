@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import GameCard from './components/GameCard';
 
 export const dynamic = 'force-dynamic';
 
@@ -19,27 +20,15 @@ export default async function Page({ searchParams }) {
 
 	return (
 		<main className="container">
-			<h1 className="title">H5 游戏列表</h1>
-			<ul className="grid">
+			<ul className="grid onecol">
 				{items?.map((game) => (
-					<li key={game.id} className="card">
-						<a href={game.url} className="cardLink" target="_self" rel="noopener noreferrer">
-							<img src={game.thumb} alt={game.title} className="thumb" width={256} height={192} loading="lazy" />
-							<div className="content">
-								<h2 className="gameTitle">{game.title}</h2>
-								<p className="desc">{game.description}</p>
-								<p className="inst">{game.instructions}</p>
-							</div>
-						</a>
-					</li>
+					<GameCard key={game.id} game={game} />
 				))}
 			</ul>
 			<div className="pagination">
-				<Link href={`/?page=${Math.max(1, page - 1)}`} prefetch className="pageBtn" aria-disabled={page <= 1}>
-					上一页
-				</Link>
-				<span className="pageInfo">第 {page} 页</span>
-				<Link href={`/?page=${page + 1}`} prefetch className="pageBtn">下一页</Link>
+				<Link href={`/?page=${Math.max(1, page - 1)}`} prefetch className="pageBtn iconBtn" aria-disabled={page <= 1} aria-label="上一页" />
+				<span className="pageDot" aria-hidden="true" />
+				<Link href={`/?page=${page + 1}`} prefetch className="pageBtn iconBtn" aria-label="下一页" />
 			</div>
 		</main>
 	);
