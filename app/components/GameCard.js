@@ -4,10 +4,8 @@ import { useState, useCallback } from 'react';
 
 export default function GameCard({ game }) {
 	const [descExpanded, setDescExpanded] = useState(false);
-	const [instExpanded, setInstExpanded] = useState(false);
 
 	const onToggleDesc = useCallback(() => setDescExpanded((v) => !v), []);
-	const onToggleInst = useCallback(() => setInstExpanded((v) => !v), []);
 
 	return (
 		<li className="card">
@@ -22,9 +20,7 @@ export default function GameCard({ game }) {
 				<p className={descExpanded ? 'desc expanded' : 'desc'} onClick={onToggleDesc} role="button" aria-expanded={descExpanded}>
 					{game.description}
 				</p>
-				<p className={instExpanded ? 'inst expanded' : 'inst'} onClick={onToggleInst} role="button" aria-expanded={instExpanded}>
-					{game.instructions}
-				</p>
+				{null}
 				<div className="actions">
 					<a href={game.url} className="playBtn" target="_self" rel="noopener noreferrer" aria-label={`开始 ${game.title}`}>
 						PLAY
