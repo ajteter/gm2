@@ -1,12 +1,23 @@
 import Link from 'next/link';
 import GameCard from './components/GameCard';
+import { headers } from 'next/headers';
 
 export const dynamic = 'force-dynamic';
 
 async function fetchGames(page) {
-	const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL ?? ''}/api/games?page=${page}`, {
-		next: { revalidate: 60 },
-	});
+	const envBase = process.env.NEXT_PUBLIC_SITE_URL;
+	let baseUrl = envBase;
+	if (!baseUrl) {
+		const h = headers();
+		const host = h.get('x-forwarded-host') || h.get('host');
+		const proto = h.get('x-forwarded-proto') || 'https';
+		if (host) baseUrl = `${proto}://${host}`;
+	}
+	if (!baseUrl) {
+		return { items: [] };
+	}
+	const url = `${baseUrl}/api/games?page=${page}`;
+	const res = await fetch(url, { next: { revalidate: 60 } });
 	if (!res.ok) return { items: [] };
 	try {
 		return await res.json();
