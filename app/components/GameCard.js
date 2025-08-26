@@ -7,19 +7,13 @@ export default function GameCard({ game }) {
 
 	const onToggleDesc = useCallback(() => setDescExpanded((v) => !v), []);
 
-	// 构建带有追踪参数的游戏链接
-	const buildGameUrl = useCallback((baseUrl) => {
-		const url = new URL(baseUrl);
-		// 添加 referrer 参数确保 WebView 环境下也能追踪
-		url.searchParams.set('ref', window.location.origin);
-		url.searchParams.set('source', 'webview');
-		return url.toString();
-	}, []);
+	// 直接使用原始链接，通过 referrer 头进行追踪
+	const gameUrl = game.url;
 
 	return (
 		<li className="card">
 			<div className="media">
-				<a href={buildGameUrl(game.url)} className="thumbLink" target="_self" rel="noopener" aria-label={`打开 ${game.title}`}>
+				<a href={gameUrl} className="thumbLink" target="_self" rel="noopener" aria-label={`打开 ${game.title}`}>
 					<img src={game.thumb} alt={game.title} className="thumb" width={512} height={384} loading="lazy" />
 				</a>
 				<span className="badge" aria-label="分类">{game.category}</span>
@@ -31,7 +25,7 @@ export default function GameCard({ game }) {
 				</p>
 				{null}
 				<div className="actions">
-					<a href={buildGameUrl(game.url)} className="playBtn" target="_self" rel="noopener" aria-label={`开始 ${game.title}`}>
+					<a href={gameUrl} className="playBtn" target="_self" rel="noopener" aria-label={`开始 ${game.title}`}>
 						PLAY
 					</a>
 				</div>
