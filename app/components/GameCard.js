@@ -4,18 +4,33 @@ import { useState, useCallback } from 'react';
 
 export default function GameCard({ game }) {
 	const [descExpanded, setDescExpanded] = useState(false);
+	const [isLoading, setIsLoading] = useState(false);
 
 	const onToggleDesc = useCallback(() => setDescExpanded((v) => !v), []);
 
 	// 直接使用原始链接，通过 referrer 头进行追踪
 	const gameUrl = game.url;
 
+	// 添加点击处理函数，提供立即反馈
+	const handleGameClick = useCallback((url) => {
+		setIsLoading(true);
+		// 立即显示加载状态，然后跳转
+		setTimeout(() => {
+			window.location.href = url;
+		}, 100);
+	}, []);
+
 	return (
 		<li className="card">
 			<div className="media">
-				<a href={gameUrl} className="thumbLink" target="_self" rel="noopener" aria-label={`打开 ${game.title}`}>
+				<button 
+					onClick={() => handleGameClick(gameUrl)} 
+					className={`thumbLink ${isLoading ? 'loading' : ''}`} 
+					disabled={isLoading}
+					aria-label={`打开 ${game.title}`}
+				>
 					<img src={game.thumb} alt={game.title} className="thumb" width={512} height={384} loading="lazy" />
-				</a>
+				</button>
 				<span className="badge" aria-label="分类">{game.category}</span>
 			</div>
 			<div className="content">
@@ -25,9 +40,14 @@ export default function GameCard({ game }) {
 				</p>
 				{null}
 				<div className="actions">
-					<a href={gameUrl} className="playBtn" target="_self" rel="noopener" aria-label={`开始 ${game.title}`}>
+					<button 
+						onClick={() => handleGameClick(gameUrl)} 
+						className={`playBtn ${isLoading ? 'loading' : ''}`} 
+						disabled={isLoading}
+						aria-label={`开始 ${game.title}`}
+					>
 						PLAY
-					</a>
+					</button>
 				</div>
 			</div>
 		</li>
