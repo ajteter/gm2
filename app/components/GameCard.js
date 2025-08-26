@@ -10,7 +10,7 @@ export default function GameCard({ game }) {
 	return (
 		<li className="card">
 			<div className="media">
-				<a href={game.url} className="thumbLink" target="_self" rel="noopener noreferrer" aria-label={`打开 ${game.title}`}>
+				<a href={game.url} className="thumbLink" target="_self" rel="noopener" aria-label={`打开 ${game.title}`}>
 					<img src={game.thumb} alt={game.title} className="thumb" width={512} height={384} loading="lazy" />
 				</a>
 				<span className="badge" aria-label="分类">{game.category}</span>
@@ -22,7 +22,7 @@ export default function GameCard({ game }) {
 				</p>
 				{null}
 				<div className="actions">
-					<a href={game.url} className="playBtn" target="_self" rel="noopener noreferrer" aria-label={`开始 ${game.title}`}>
+					<a href={game.url} className="playBtn" target="_self" rel="noopener" aria-label={`开始 ${game.title}`}>
 						PLAY
 					</a>
 				</div>
