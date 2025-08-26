@@ -9,11 +9,13 @@ export default function RootLayout({ children }) {
 	return (
 		<html lang="zh-CN">
 			<head>
-				<meta name="referrer" content="origin" />
+				<meta name="referrer" content="origin-when-cross-origin" />
 				<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 				<meta name="format-detection" content="telephone=no" />
 				<meta name="apple-mobile-web-app-capable" content="yes" />
 				<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+				<meta name="mobile-web-app-capable" content="yes" />
+				<meta name="theme-color" content="#0b0b0c" />
 				<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6779881482191995" crossOrigin="anonymous"></script>
 			</head>
 			<body>
