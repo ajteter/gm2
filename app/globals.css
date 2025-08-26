@@ -15,6 +15,12 @@ body { background: #0b0b0c; color: #f3f4f6; }
 .thumbLink.loading { opacity: 0.6; pointer-events: none; position: relative; }
 .thumbLink.loading::after { content: ''; position: absolute; top: 50%; left: 50%; width: 24px; height: 24px; margin: -12px 0 0 -12px; border: 2px solid transparent; border-top: 2px solid #fff; border-radius: 50%; animation: spin 1s linear infinite; z-index: 1; }
 .thumb { width: 100%; height: auto; display: block; aspect-ratio: 4 / 3; object-fit: cover; background: #0f1115; }
+.thumb.skeleton { position: relative; overflow: hidden; }
+.thumb.skeleton::before { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.12) 50%, rgba(255,255,255,0.06) 100%); animation: shimmer 1.2s infinite; }
+@keyframes shimmer { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+.empty { padding: 24px; text-align: center; color: #c9ced6; }
+.emptyIcon { width: 40px; height: 40px; margin: 0 auto 8px; border-radius: 50%; border: 3px solid #2b313b; border-top-color: #566077; animation: spin 1s linear infinite; }
+.emptyText { font-size: 14px; }
 .badge { position: absolute; left: 8px; top: 8px; padding: 4px 8px; background: #0ea5e9; color: #001018; font-size: 12px; border-radius: 999px; border: 1px solid #0b7fb3; }
 .content { padding: 10px; }
 .gameTitle { font-size: 16px; margin: 0 0 6px; line-height: 1.25; }

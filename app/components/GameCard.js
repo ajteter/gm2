@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useCallback } from 'react';
+import Image from 'next/image';
 
 export default function GameCard({ game }) {
 	const [descExpanded, setDescExpanded] = useState(false);
@@ -29,7 +30,7 @@ export default function GameCard({ game }) {
 					disabled={isLoading}
 					aria-label={`打开 ${game.title}`}
 				>
-					<img src={game.thumb} alt={game.title} className="thumb" width={512} height={384} loading="lazy" />
+					<Image src={game.thumb} alt={game.title} className="thumb" width={512} height={384} sizes="(max-width: 768px) 100vw, 512px" />
 				</button>
 				<span className="badge" aria-label="分类">{game.category}</span>
 			</div>
