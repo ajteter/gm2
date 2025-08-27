@@ -28,6 +28,7 @@ function PlayGame() {
                 title="Game"
                 allow="autoplay; fullscreen; payment"
                 allowFullScreen
+                sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-orientation-lock"
             />
             <Link href="/" className={styles.backButton}>
                 &larr; 返回
