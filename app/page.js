@@ -2,8 +2,6 @@ import Link from 'next/link';
 import GameCard from './components/GameCard';
 import { headers } from 'next/headers';
 
-export const dynamic = 'force-dynamic';
-
 async function fetchGames(page) {
 	const envBase = process.env.NEXT_PUBLIC_SITE_URL;
 	let baseUrl = envBase;

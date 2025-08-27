@@ -1,10 +1,13 @@
 'use client';
 
 import { useState, useCallback } from 'react';
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 export default function GameCard({ game }) {
 	const [descExpanded, setDescExpanded] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
+	const router = useRouter();
 
 	const onToggleDesc = useCallback(() => setDescExpanded((v) => !v), []);
 
@@ -14,11 +17,8 @@ export default function GameCard({ game }) {
 	// 添加点击处理函数，提供立即反馈
 	const handleGameClick = useCallback((url) => {
 		setIsLoading(true);
-		// 立即显示加载状态，然后跳转
-		setTimeout(() => {
-			window.location.href = url;
-		}, 100);
-	}, []);
+		router.push(`/play?url=${encodeURIComponent(url)}`);
+	}, [router]);
 
 	return (
 		<li className="card">
@@ -29,7 +29,7 @@ export default function GameCard({ game }) {
 					disabled={isLoading}
 					aria-label={`打开 ${game.title}`}
 				>
-					<img src={game.thumb} alt={game.title} className="thumb" width={512} height={384} loading="lazy" />
+					<Image src={game.thumb} alt={game.title} className="thumb" width={512} height={384} />
 				</button>
 				<span className="badge" aria-label="分类">{game.category}</span>
 			</div>
