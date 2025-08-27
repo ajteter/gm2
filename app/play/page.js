@@ -3,8 +3,9 @@
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import styles from './play.module.css';
+import { Suspense } from 'react';
 
-export default function PlayPage() {
+function PlayGame() {
     const searchParams = useSearchParams();
     const gameUrl = searchParams.get('url');
 
@@ -32,5 +33,13 @@ export default function PlayPage() {
                 &larr; 返回
             </Link>
         </div>
+    );
+}
+
+export default function PlayPage() {
+    return (
+        <Suspense fallback={<div className={styles.container}></div>}>
+            <PlayGame />
+        </Suspense>
     );
 }
