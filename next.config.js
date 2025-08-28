@@ -4,6 +4,7 @@ const nextConfig = {
 		remotePatterns: [
 			{ protocol: 'https', hostname: 'img.gamemonetize.com' },
 		],
+		deviceSizes: [360, 480, 720, 960],
 	},
 };
 
