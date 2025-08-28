@@ -18,14 +18,20 @@
     position: absolute;
     top: 20px;
     left: 20px;
-    padding: 8px 16px;
+    width: 44px;
+    height: 44px;
     background-color: rgba(0, 0, 0, 0.5);
     color: white;
     text-decoration: none;
-    border-radius: 20px;
-    font-size: 14px;
+    border-radius: 50%;
+    font-size: 24px;
     z-index: 1001;
     backdrop-filter: blur(5px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    line-height: 1;
+    padding: 0;
 }
 
 .error {

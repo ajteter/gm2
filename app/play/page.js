@@ -30,8 +30,8 @@ function PlayGame() {
                 allowFullScreen
                 sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-orientation-lock"
             />
-            <Link href="/" className={styles.backButton}>
-                &larr; 返回
+            <Link href="/" className={styles.backButton} aria-label="返回">
+                &larr;
             </Link>
         </div>
     );

@@ -25,11 +25,11 @@ export default function GameCard({ game }) {
 			<div className="media">
 				<button 
 					onClick={() => handleGameClick(gameUrl)} 
-					className={`thumbLink ${isLoading ? 'loading' : ''}`} 
+					className={`thumbLink thumb ${isLoading ? 'loading' : ''}`} 
 					disabled={isLoading}
 					aria-label={`打开 ${game.title}`}
 				>
-					<Image src={game.thumb} alt={game.title} className="thumb" width={512} height={384} />
+					<Image src={game.thumb} alt={game.title} fill sizes="(max-width: 640px) 50vw, 33vw" />
 				</button>
 				<span className="badge" aria-label="分类">{game.category}</span>
 			</div>
