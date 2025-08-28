@@ -1,15 +1,13 @@
 'use client';
 
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import styles from './game.module.css';
 
 export default function GameClientUI({ game }) {
-    const router = useRouter();
 
     const handleAnotherGame = () => {
-        // Use router.push with a random query string to bypass the server-side cache
-        router.push(`/game?t=${new Date().getTime()}`);
+        // Use a full page reload with a random query string to bypass the server-side cache and avoid issues with a busy main thread.
+        window.location.href = `/game?t=${new Date().getTime()}`;
     };
 
     return (
