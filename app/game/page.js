@@ -1,12 +1,17 @@
 import Link from 'next/link';
 import styles from './game.module.css';
 
-async function getRandomGame() {
+async function getRandomGame(bustCache = false) {
     const randomPage = Math.floor(Math.random() * 20) + 1; // Pages 1-20
     const upstream = `https://gamemonetize.com/feed.php?format=0&platform=1&num=50&page=${randomPage}`;
 
     try {
-        const res = await fetch(upstream, { headers: { 'accept': 'application/json' }, next: { revalidate: 900 } });
+        const fetchOptions = {
+            headers: { 'accept': 'application/json' },
+            // Revalidate every 15 mins, but allow cache busting for "Another Game" button
+            next: { revalidate: bustCache ? 0 : 900 }
+        };
+        const res = await fetch(upstream, fetchOptions);
         if (!res.ok) return null;
         
         const games = await res.json();
@@ -31,8 +36,9 @@ export const metadata = {
 
 import GameClientUI from './GameClientUI';
 
-export default async function RandomGamePage() {
-    const game = await getRandomGame();
+export default async function RandomGamePage({ searchParams }) {
+    const bustCache = !!searchParams.t;
+    const game = await getRandomGame(bustCache);
 
     if (!game || !game.url) {
         return (

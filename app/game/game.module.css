@@ -29,7 +29,10 @@
 }
 
 .actionButton {
-    display: inline-block;
+    display: inline-flex; /* Use inline-flex for alignment */
+    align-items: center; /* Vertically center icon and text */
+    justify-content: center; /* Horizontally center content */
+    gap: 0.5rem; /* Space between icon and text */
     text-align: center;
     padding: 10px 20px;
     background: #22c55e;
