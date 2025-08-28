@@ -1,12 +1,13 @@
 'use client';
 
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import styles from './play.module.css';
 import { Suspense } from 'react';
 
 function PlayGame() {
     const searchParams = useSearchParams();
+    const router = useRouter();
     const gameUrl = searchParams.get('url');
 
     if (!gameUrl) {
@@ -30,9 +31,9 @@ function PlayGame() {
                 allowFullScreen
                 sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-orientation-lock"
             />
-            <Link href="/" className={styles.backButton} aria-label="返回">
+            <button onClick={() => router.back()} className={styles.backButton} aria-label="返回">
                 &larr;
-            </Link>
+            </button>
         </div>
     );
 }
