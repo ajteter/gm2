@@ -29,6 +29,8 @@ export const metadata = {
     },
 };
 
+import GameClientUI from './GameClientUI';
+
 export default async function RandomGamePage() {
     const game = await getRandomGame();
 
@@ -37,7 +39,7 @@ export default async function RandomGamePage() {
             <div className={styles.container}>
                 <div className={styles.error}>
                     <p>Could not load a game at the moment. Please try again.</p>
-                    <div className={styles.buttonContainer} style={{ position: 'static', transform: 'none' }}>
+                    <div className={styles.header}>
                          <Link href="/" className={styles.actionButton}>More Games</Link>
                     </div>
                 </div>
@@ -45,20 +47,5 @@ export default async function RandomGamePage() {
         );
     }
 
-    return (
-        <div className={styles.container}>
-            <iframe
-                src={game.url}
-                className={styles.iframe}
-                title={game.title}
-                allow="autoplay; fullscreen; payment"
-                allowFullScreen
-                sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-orientation-lock"
-            />
-            <div className={styles.buttonContainer}>
-                <Link href="/game" className={styles.actionButton}>Another Game</Link>
-                <Link href="/" className={styles.actionButton}>More Games</Link>
-            </div>
-        </div>
-    );
+    return <GameClientUI game={game} />;
 }
