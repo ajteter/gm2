@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useCallback } from 'react';
-import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 export default function GameCard({ game }) {
@@ -25,11 +24,11 @@ export default function GameCard({ game }) {
 			<div className="media">
 				<button 
 					onClick={() => handleGameClick(gameUrl)} 
-					className={`thumbLink thumb ${isLoading ? 'loading' : ''}`} 
+					className={`thumbLink ${isLoading ? 'loading' : ''}`} 
 					disabled={isLoading}
 					aria-label={`打开 ${game.title}`}
 				>
-					<Image src={game.thumb} alt={game.title} fill sizes="(max-width: 640px) 50vw, 33vw" />
+					<img src={game.thumb} alt={game.title} className="thumb" loading="lazy" />
 				</button>
 				<span className="badge" aria-label="分类">{game.category}</span>
 			</div>
