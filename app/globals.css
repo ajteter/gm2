@@ -1,10 +1,13 @@
 :root { color-scheme: light dark; }
 * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 html, body { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; }
-body { padding-top: env(safe-area-inset-top, 0px); }
-body { background: #0b0b0c; color: #f3f4f6; }
+body {
+    padding-top: env(safe-area-inset-top, 0px);
+    background: #0b0b0c;
+    color: #f3f4f6;
+}
 
-.container { max-width: 960px; padding: 12px; margin: 0 auto; padding-top: env(safe-area-inset-top, 24px); }
+.container { max-width: 960px; padding: 24px 12px 12px; margin: 0 auto; }
 .title { font-size: 20px; margin: 8px 0 12px; font-weight: 700; }
 .grid { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
 .grid.onecol { grid-template-columns: 1fr; }
