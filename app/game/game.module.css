@@ -9,6 +9,7 @@
     flex-direction: column;
     justify-content: flex-start; /* Align items to the top */
     align-items: center;
+    padding-top: env(safe-area-inset-top, 20px);
 }
 
 .header {
