@@ -36,14 +36,16 @@ export default async function Page({ searchParams }) {
 					<>
 						<GameCard key={game.id} game={game} />
 						{index === 0 &&
-							<div>
+							<li>
 								{/* Ezoic - under_first_paragraph - under_first_paragraph */}
 								<div id="ezoic-pub-ad-placeholder-118"></div>
 								{/* End Ezoic - under_first_paragraph - under_first_paragraph */}
-							</div>
+							</li>
 						}
 						{(index + 1) % 5 === 0 && (
-							<div id={`ezoic-ad-${index + 1}`} />
+							<li>
+								<div id={`ezoic-ad-${index + 1}`} />
+							</li>
 						)}
 					</>
 				))}
