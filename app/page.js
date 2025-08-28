@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import GameCard from './components/GameCard';
+import GameList from './components/GameList';
 import { headers } from 'next/headers';
 
 async function fetchGames(page) {
@@ -31,25 +31,7 @@ export default async function Page({ searchParams }) {
 
 	return (
 		<main className="container">
-			<ul className="grid onecol">
-				{items?.map((game, index) => (
-					<>
-						<GameCard key={game.id} game={game} />
-						{index === 0 &&
-							<li>
-								{/* Ezoic - under_first_paragraph - under_first_paragraph */}
-								<div id="ezoic-pub-ad-placeholder-118"></div>
-								{/* End Ezoic - under_first_paragraph - under_first_paragraph */}
-							</li>
-						}
-						{(index + 1) % 5 === 0 && (
-							<li>
-								<div id={`ezoic-ad-${index + 1}`} />
-							</li>
-						)}
-					</>
-				))}
-			</ul>
+			<GameList items={items} />
 			{(!items || items.length === 0) && (
 				<div className="empty">
 					<div className="emptyIcon" aria-hidden="true" />

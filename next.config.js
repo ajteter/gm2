@@ -6,6 +6,15 @@ const nextConfig = {
 		],
 		deviceSizes: [360, 480, 720, 960],
 	},
+	async redirects() {
+		return [
+			{
+				source: '/ads.txt',
+				destination: 'https://srv.adstxtmanager.com/19390/yingbo.site',
+				permanent: true,
+			},
+		]
+	},
 };
 
 module.exports = nextConfig;
