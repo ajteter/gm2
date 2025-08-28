@@ -3,12 +3,13 @@
 import { useSearchParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import styles from './play.module.css';
-import { Suspense } from 'react';
+import { Suspense, useState } from 'react';
 
 function PlayGame() {
     const searchParams = useSearchParams();
     const router = useRouter();
     const gameUrl = searchParams.get('url');
+    const [isIframeLoading, setIsIframeLoading] = useState(true);
 
     if (!gameUrl) {
         return (
@@ -23,6 +24,11 @@ function PlayGame() {
 
     return (
         <div className={styles.container}>
+            {isIframeLoading && (
+                <div className={styles.loadingOverlay}>
+                    <div className="emptyIcon" />
+                </div>
+            )}
             <iframe
                 src={gameUrl}
                 className={styles.iframe}
@@ -30,6 +36,7 @@ function PlayGame() {
                 allow="autoplay; fullscreen; payment"
                 allowFullScreen
                 sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-orientation-lock"
+                onLoad={() => setIsIframeLoading(false)}
             />
             <button onClick={() => router.back()} className={styles.backButton} aria-label="返回">
                 &larr;
