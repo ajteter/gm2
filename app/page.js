@@ -35,6 +35,13 @@ export default async function Page({ searchParams }) {
 				{items?.map((game, index) => (
 					<>
 						<GameCard key={game.id} game={game} />
+						{index === 0 &&
+							<div>
+								{/* Ezoic - under_first_paragraph - under_first_paragraph */}
+								<div id="ezoic-pub-ad-placeholder-118"></div>
+								{/* End Ezoic - under_first_paragraph - under_first_paragraph */}
+							</div>
+						}
 						{(index + 1) % 5 === 0 && (
 							<div id={`ezoic-ad-${index + 1}`} />
 						)}
