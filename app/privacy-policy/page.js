@@ -11,11 +11,13 @@ export default function PrivacyPolicy() {
       <p>
         Our partners, including Google AdSense and Ezoic, may collect, share, and use personal data for the personalization of ads. For more information on how Google uses data, please visit <a href="https://policies.google.com/technologies/partner-sites" target="_blank" rel="noopener noreferrer">Google's Privacy & Terms</a>.
       </p>
+      
+      <h3>Ezoic Service Privacy Policy</h3>
+      <p>This site uses Ezoic's advertising platform. The privacy policy for the Ezoic service is included below.</p>
+      <span id="ezoic-privacy-policy-embed"></span>
+
       <p>
         By using our website, you hereby consent to our Privacy Policy and agree to its terms.
-      </p>
-      <p>
-        We may update our Privacy Policy from time to time. You are advised to review this Privacy Policy periodically for any changes.
       </p>
 
       <h2>Disclaimer</h2>
