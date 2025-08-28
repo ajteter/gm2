@@ -9,6 +9,13 @@ export default function RootLayout({ children }) {
 	return (
 		<html lang="zh-CN">
 			<head>
+				<script src="https://cmp.gatekeeperconsent.com/min.js" data-cfasync="false"></script>
+				<script src="https://the.gatekeeperconsent.com/cmp.min.js" data-cfasync="false"></script>
+				<script async src="//www.ezojs.com/ezoic/sa.min.js"></script>
+				<script dangerouslySetInnerHTML={{ __html: `
+				 window.ezstandalone = window.ezstandalone || {};
+				 ezstandalone.cmd = ezstandalone.cmd || [];
+				` }} />
 				<meta name="referrer" content="origin-when-cross-origin" />
 				<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
 				<meta name="format-detection" content="telephone=no" />

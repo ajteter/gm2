@@ -32,8 +32,13 @@ export default async function Page({ searchParams }) {
 	return (
 		<main className="container">
 			<ul className="grid onecol">
-				{items?.map((game) => (
-					<GameCard key={game.id} game={game} />
+				{items?.map((game, index) => (
+					<>
+						<GameCard key={game.id} game={game} />
+						{(index + 1) % 5 === 0 && (
+							<div id={`ezoic-ad-${index + 1}`} />
+						)}
+					</>
 				))}
 			</ul>
 			{(!items || items.length === 0) && (
