@@ -2,13 +2,25 @@ import Link from 'next/link';
 import styles from './game.module.css';
 
 async function getRandomGame(bustCache = false) {
-    const randomPage = Math.floor(Math.random() * 20) + 1; // Pages 1-20
+    let randomPage;
+
+    if (bustCache) {
+        // For "Another Game" clicks, use true randomness to ensure a new game every time.
+        // This makes the render dynamic, but that's intended for this action.
+        randomPage = Math.floor(Math.random() * 20) + 1;
+    } else {
+        // For direct visits, use deterministic pseudo-randomness based on time.
+        // This allows the page to be statically generated and cached.
+        const minute = new Date().getMinutes();
+        randomPage = (minute % 20) + 1; // Cycle through pages 1-20 every hour.
+    }
+
     const upstream = `https://gamemonetize.com/feed.php?format=0&platform=1&num=50&page=${randomPage}`;
 
     try {
         const fetchOptions = {
             headers: { 'accept': 'application/json' },
-            // Revalidate every 15 mins, but allow cache busting for "Another Game" button
+            // Revalidate every 15 mins for direct visits, but bust cache for "Another Game" clicks.
             next: { revalidate: bustCache ? 0 : 900 }
         };
         const res = await fetch(upstream, fetchOptions);
@@ -17,6 +29,9 @@ async function getRandomGame(bustCache = false) {
         const games = await res.json();
         if (!games || !Array.isArray(games) || games.length === 0) return null;
 
+        // Always pick a random game from the fetched page.
+        // For direct visits, the page is cached, so this will be consistent.
+        // For "Another Game" clicks, we're fetching a new random page anyway.
         const randomIndex = Math.floor(Math.random() * games.length);
         return games[randomIndex];
 
