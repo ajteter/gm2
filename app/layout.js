@@ -16,6 +16,7 @@ export default function RootLayout({ children }) {
 				<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 				<meta name="mobile-web-app-capable" content="yes" />
 				<meta name="theme-color" content="#0b0b0c" />
+				<meta name="ezoic-site-verification" content="iCq48muoBsgn8Yc1DK9a67UfGBwa3M" />
 				<link rel="preconnect" href="https://gamemonetize.com" crossOrigin="anonymous" />
 				<link rel="preconnect" href="https://html5.gamemonetize.com" crossOrigin="anonymous" />
 				<link rel="preconnect" href="https://img.gamemonetize.com" crossOrigin="anonymous" />
