@@ -5,8 +5,10 @@
     width: 100%;
     height: 100%;
     background-color: #000;
-    display: grid;
-    grid-template-rows: auto 1fr; /* Header gets auto height, iframe gets the rest */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
     padding-top: env(safe-area-inset-top, 20px);
 }
 
@@ -19,7 +21,7 @@
     background-color: #16181d;
     width: 100%;
     border-bottom: 1px solid #23262d;
-    /* No flex-shrink needed in grid */
+    flex-shrink: 0;
 }
 
 .buttonGroup {
@@ -27,15 +29,25 @@
     gap: 1rem;
 }
 
-.adContainer {
+.mainContent {
+    flex-grow: 1;
     width: 100%;
+    position: relative; /* Anchor for the absolutely positioned ad */
+}
+
+.adContainer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10; /* Sit on top of the iframe */
     text-align: center;
-    /* This container will have 0 height if no ad is served, effectively hiding it */
+    background: rgba(0, 0, 0, 0.5); /* Give it a semi-transparent background */
 }
 
 .iframe {
     width: 100%;
-    height: 100%; /* Fill the grid row area */
+    height: 100%;
     border: none;
 }
 

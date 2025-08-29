@@ -53,6 +53,9 @@ export default function GameClientUI({ game, randomPath, listPath }) {
                         <span>More Games</span>
                     </Link>
                 </div>
+            </div>
+
+            <div className={styles.mainContent}>
                 <div className={styles.adContainer}>
                     {/* The main adsbygoogle.js script is loaded globally in layout.js */}
                     <ins className="adsbygoogle"
@@ -62,16 +65,16 @@ export default function GameClientUI({ game, randomPath, listPath }) {
                          data-ad-format="auto"
                          data-full-width-responsive="true"></ins>
                 </div>
-            </div>
 
-            <iframe
-                src={game.url}
-                className={styles.iframe}
-                title={game.title}
-                allow="autoplay; fullscreen; payment"
-                allowFullScreen
-                sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-orientation-lock"
-            />
+                <iframe
+                    src={game.url}
+                    className={styles.iframe}
+                    title={game.title}
+                    allow="autoplay; fullscreen; payment"
+                    allowFullScreen
+                    sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-orientation-lock"
+                />
+            </div>
         </div>
     );
 }
