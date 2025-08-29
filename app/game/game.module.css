@@ -5,10 +5,8 @@
     width: 100%;
     height: 100%;
     background-color: #000;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
+    display: grid;
+    grid-template-rows: auto 1fr; /* Header gets auto height, iframe gets the rest */
     padding-top: env(safe-area-inset-top, 20px);
 }
 
@@ -21,7 +19,7 @@
     background-color: #16181d;
     width: 100%;
     border-bottom: 1px solid #23262d;
-    flex-shrink: 0;
+    /* No flex-shrink needed in grid */
 }
 
 .buttonGroup {
@@ -37,7 +35,7 @@
 
 .iframe {
     width: 100%;
-    flex-grow: 1; /* Take all remaining vertical space */
+    height: 100%; /* Fill the grid row area */
     border: none;
 }
 
