@@ -14,9 +14,9 @@
 
 .header {
     display: flex;
-    justify-content: space-between; /* Space out items */
-    align-items: center; /* Vertically align items */
-    gap: 1rem;
+    flex-direction: column; /* Stack items vertically */
+    align-items: center; /* Center items horizontally */
+    gap: 0.75rem; /* Space between button row and ad row */
     padding: 0.75rem;
     background-color: #16181d;
     width: 100%;
@@ -30,11 +30,9 @@
 }
 
 .adContainer {
-    flex-grow: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-width: 100px; /* Give ad a min width */
+    width: 100%;
+    text-align: center;
+    /* This container will have 0 height if no ad is served, effectively hiding it */
 }
 
 .iframe {
