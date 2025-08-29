@@ -1,6 +1,6 @@
 import Link from 'next/link';
-import GameCard from '../../../components/GameCard';
-import { loadGames } from '../../../lib/data';
+import GameCard from '../../components/GameCard';
+import { loadGames } from '../../lib/data';
 
 export async function generateMetadata({ params }) {
     return {
