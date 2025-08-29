@@ -25,11 +25,11 @@ const GridIcon = () => (
     </svg>
 );
 
-export default function GameClientUI({ game }) {
+export default function GameClientUI({ game, randomPath, listPath }) {
 
     const handleAnotherGame = () => {
         // Use location.replace to navigate without adding to browser history, preventing the "back button trap".
-        window.location.replace(`/game?t=${new Date().getTime()}`);
+        window.location.replace(`${randomPath}?t=${new Date().getTime()}`);
     };
 
     useEffect(() => {
@@ -47,15 +47,14 @@ export default function GameClientUI({ game }) {
                     <DiceIcon />
                     <span>Another Game</span>
                 </button>
-                <Link href="/" className={styles.actionButton}>
+                <Link href={listPath} className={styles.actionButton}>
                     <GridIcon />
                     <span>More Games</span>
                 </Link>
             </div>
 
             <div className={styles.adContainer}>
-                {/* The script is already in layout.js, but including it here is safe. */}
-                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6779881482191995" crossOrigin="anonymous"></script>
+                {/* The main adsbygoogle.js script is loaded globally in layout.js */}
                 <ins className="adsbygoogle"
                      style={{display: 'block'}}
                      data-ad-client="ca-pub-6779881482191995"

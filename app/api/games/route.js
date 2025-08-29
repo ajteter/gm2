@@ -1,4 +1,4 @@
-import portraitGames from '../../lib/gmbest_portrait.json';
+import portraitGames from '../../lib/gmbestvertical.json';
 
 export const runtime = 'edge';
 

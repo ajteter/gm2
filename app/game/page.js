@@ -1,13 +1,13 @@
 import Link from 'next/link';
 import styles from './game.module.css';
 import GameClientUI from './GameClientUI';
-import portraitGames from '../lib/gmbest_portrait.json';
+import portraitGames from '../lib/gmbestvertical.json';
 
 // This function now reads from the pre-filtered local JSON file.
 async function getRandomGame() {
     try {
         if (portraitGames.length === 0) {
-            console.error("No games found in gmbest_portrait.json");
+            console.error("No games found in gmbestvertical.json");
             return null;
         }
 
@@ -29,8 +29,9 @@ export const metadata = {
     },
 };
 
-// The page no longer needs searchParams as the cache-busting logic is gone.
-export default async function RandomGamePage() {
+// By accepting searchParams, we are telling Next.js to treat this as a dynamic page.
+// This ensures the page is re-rendered on every request, allowing a new random game to be selected.
+export default async function RandomGamePage({ searchParams }) {
     const game = await getRandomGame();
 
     if (!game || !game.url) {
@@ -46,5 +47,5 @@ export default async function RandomGamePage() {
         );
     }
 
-    return <GameClientUI game={game} />;
+    return <GameClientUI game={game} randomPath="/game" listPath="/" />;
 }
