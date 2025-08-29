@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { useEffect } from 'react';
 import styles from './game.module.css';
 
 const DiceIcon = () => (
@@ -31,6 +32,14 @@ export default function GameClientUI({ game }) {
         window.location.replace(`/game?t=${new Date().getTime()}`);
     };
 
+    useEffect(() => {
+        try {
+            (window.adsbygoogle = window.adsbygoogle || []).push({});
+        } catch (e) {
+            console.error("AdSense push error:", e);
+        }
+    }, []); // Run once on mount
+
     return (
         <div className={styles.container}>
             <div className={styles.header}>
@@ -43,6 +52,18 @@ export default function GameClientUI({ game }) {
                     <span>More Games</span>
                 </Link>
             </div>
+
+            <div className={styles.adContainer}>
+                {/* The script is already in layout.js, but including it here is safe. */}
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6779881482191995" crossOrigin="anonymous"></script>
+                <ins className="adsbygoogle"
+                     style={{display: 'block'}}
+                     data-ad-client="ca-pub-6779881482191995"
+                     data-ad-slot="7859383456"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+            </div>
+
             <iframe
                 src={game.url}
                 className={styles.iframe}
