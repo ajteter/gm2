@@ -1,33 +1,25 @@
+import portraitGames from '../../lib/gmbest_portrait.json';
+
 export const runtime = 'edge';
 
 export async function GET(request) {
 	const { searchParams } = new URL(request.url);
 	const page = Number(searchParams.get('page') || '1') || 1;
-	const upstream = `https://gamemonetize.com/feed.php?format=0&platform=1&num=50&page=${page}`;
+	const pageSize = 50;
 
-	try {
-		const res = await fetch(upstream, {
-			headers: { 'accept': 'application/json' },
-			next: { revalidate: 60 },
-		});
-		if (!res.ok) {
-			return new Response(JSON.stringify({ items: [] }), { status: 200, headers: { 'content-type': 'application/json', 'cache-control': 'no-store' } });
-		}
-		// Prefer JSON parse; fallback to items:[]
-		try {
-			const data = await res.json();
-			return new Response(JSON.stringify(data), {
-				headers: {
-					'content-type': 'application/json; charset=utf-8',
-					'cache-control': 'public, s-maxage=60, stale-while-revalidate=300',
-				},
-			});
-		} catch {
-			return new Response(JSON.stringify({ items: [] }), { status: 200, headers: { 'content-type': 'application/json', 'cache-control': 'no-store' } });
-		}
-	} catch {
-		return new Response(JSON.stringify({ items: [] }), { status: 200, headers: { 'content-type': 'application/json', 'cache-control': 'no-store' } });
-	}
+	// The data is already filtered, so we just need to paginate it.
+	const start = (page - 1) * pageSize;
+	const end = start + pageSize;
+	const items = portraitGames.slice(start, end);
+
+	// The frontend is robust enough to handle a direct array response.
+	return new Response(JSON.stringify(items), {
+		headers: {
+			'content-type': 'application/json; charset=utf-8',
+			// Cache the response for 10 minutes on the edge, and allow stale for 30 mins
+			'cache-control': 'public, s-maxage=600, stale-while-revalidate=1800',
+		},
+	});
 }
 
 
