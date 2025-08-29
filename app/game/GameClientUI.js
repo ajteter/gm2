@@ -43,24 +43,25 @@ export default function GameClientUI({ game, randomPath, listPath }) {
     return (
         <div className={styles.container}>
             <div className={styles.header}>
-                <button onClick={handleAnotherGame} className={styles.actionButton}>
-                    <DiceIcon />
-                    <span>Another Game</span>
-                </button>
-                <Link href={listPath} className={styles.actionButton}>
-                    <GridIcon />
-                    <span>More Games</span>
-                </Link>
-            </div>
-
-            <div className={styles.adContainer}>
-                {/* The main adsbygoogle.js script is loaded globally in layout.js */}
-                <ins className="adsbygoogle"
-                     style={{display: 'block'}}
-                     data-ad-client="ca-pub-6779881482191995"
-                     data-ad-slot="7859383456"
-                     data-ad-format="auto"
-                     data-full-width-responsive="true"></ins>
+                <div className={styles.buttonGroup}>
+                    <button onClick={handleAnotherGame} className={styles.actionButton}>
+                        <DiceIcon />
+                        <span>Another Game</span>
+                    </button>
+                    <Link href={listPath} className={styles.actionButton}>
+                        <GridIcon />
+                        <span>More Games</span>
+                    </Link>
+                </div>
+                <div className={styles.adContainer}>
+                    {/* The main adsbygoogle.js script is loaded globally in layout.js */}
+                    <ins className="adsbygoogle"
+                         style={{display: 'block'}}
+                         data-ad-client="ca-pub-6779881482191995"
+                         data-ad-slot="7859383456"
+                         data-ad-format="auto"
+                         data-full-width-responsive="true"></ins>
+                </div>
             </div>
 
             <iframe

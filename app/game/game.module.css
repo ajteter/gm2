@@ -7,32 +7,47 @@
     background-color: #000;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start; /* Align items to the top */
+    justify-content: flex-start;
     align-items: center;
     padding-top: env(safe-area-inset-top, 20px);
 }
 
 .header {
     display: flex;
-    justify-content: center;
+    justify-content: space-between; /* Space out items */
+    align-items: center; /* Vertically align items */
     gap: 1rem;
     padding: 0.75rem;
     background-color: #16181d;
     width: 100%;
     border-bottom: 1px solid #23262d;
+    flex-shrink: 0;
+}
+
+.buttonGroup {
+    display: flex;
+    gap: 1rem;
+}
+
+.adContainer {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 100px; /* Give ad a min width */
 }
 
 .iframe {
     width: 100%;
-    flex-grow: 1; /* Make iframe take remaining space */
+    flex-grow: 1; /* Take all remaining vertical space */
     border: none;
 }
 
 .actionButton {
-    display: inline-flex; /* Use inline-flex for alignment */
-    align-items: center; /* Vertically center icon and text */
-    justify-content: center; /* Horizontally center content */
-    gap: 0.5rem; /* Space between icon and text */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
     text-align: center;
     padding: 10px 20px;
     background: #22c55e;
@@ -54,11 +69,4 @@
     color: white;
     text-align: center;
     padding: 2rem;
-}
-
-.adContainer {
-    padding: 8px 0;
-    width: 100%;
-    background: #000;
-    text-align: center;
 }
