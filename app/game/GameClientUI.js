@@ -53,19 +53,17 @@ export default function GameClientUI({ game, randomPath, listPath }) {
                         <span>More Games</span>
                     </Link>
                 </div>
-            </div>
-
-            <div className={styles.mainContent}>
                 <div className={styles.adContainer}>
-                    {/* The main adsbygoogle.js script is loaded globally in layout.js */}
                     <ins className="adsbygoogle"
-                         style={{display: 'block'}}
+                         style={{display: 'block', minHeight: '50px'}}
                          data-ad-client="ca-pub-6779881482191995"
                          data-ad-slot="7859383456"
                          data-ad-format="auto"
                          data-full-width-responsive="true"></ins>
                 </div>
+            </div>
 
+            <div className={styles.mainContent}>
                 <iframe
                     src={game.url}
                     className={styles.iframe}

@@ -9,13 +9,6 @@ export default function RootLayout({ children }) {
 	return (
 		<html lang="zh-CN">
 			<head>
-				<script src="https://cmp.gatekeeperconsent.com/min.js" data-cfasync="false"></script>
-				<script src="https://the.gatekeeperconsent.com/cmp.min.js" data-cfasync="false"></script>
-				<script async src="//www.ezojs.com/ezoic/sa.min.js"></script>
-				<script dangerouslySetInnerHTML={{ __html: `
-				 window.ezstandalone = window.ezstandalone || {};
-				 ezstandalone.cmd = ezstandalone.cmd || [];
-				` }} />
 				<meta name="referrer" content="origin-when-cross-origin" />
 				<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
 				<meta name="format-detection" content="telephone=no" />
@@ -23,7 +16,6 @@ export default function RootLayout({ children }) {
 				<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 				<meta name="mobile-web-app-capable" content="yes" />
 				<meta name="theme-color" content="#0b0b0c" />
-				<meta name="ezoic-site-verification" content="iCq48muoBsgn8Yc1DK9a67UfGBwa3M" />
 				<link rel="preconnect" href="https://gamemonetize.com" crossOrigin="anonymous" />
 				<link rel="preconnect" href="https://html5.gamemonetize.com" crossOrigin="anonymous" />
 				<link rel="preconnect" href="https://img.gamemonetize.com" crossOrigin="anonymous" />

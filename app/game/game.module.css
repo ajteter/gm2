@@ -36,13 +36,10 @@
 }
 
 .adContainer {
-    position: absolute;
-    top: 0;
-    left: 0;
     width: 100%;
-    z-index: 10; /* Sit on top of the iframe */
     text-align: center;
-    background: rgba(0, 0, 0, 0.5); /* Give it a semi-transparent background */
+    background-color: #16181d;
+    min-height: 50px;
 }
 
 .iframe {
