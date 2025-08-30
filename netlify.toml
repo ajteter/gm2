@@ -1,4 +1,1 @@
-[[redirects]]
-  from = "/ads.txt"
-  to = "https://srv.adstxtmanager.com/19390/yingbo.site"
-  status = 308
+# Using local ads.txt file for AdSense

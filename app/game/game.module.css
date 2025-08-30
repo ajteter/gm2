@@ -7,16 +7,13 @@
     background-color: #000;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
     padding-top: env(safe-area-inset-top, 20px);
 }
 
 .header {
     display: flex;
-    flex-direction: column; /* Stack items vertically */
-    align-items: center; /* Center items horizontally */
-    gap: 0.75rem; /* Space between button row and ad row */
+    align-items: center;
+    justify-content: center;
     padding: 0.75rem;
     background-color: #16181d;
     width: 100%;
@@ -30,9 +27,9 @@
 }
 
 .mainContent {
-    flex-grow: 1;
+    flex: 1;
     width: 100%;
-    position: relative; /* Anchor for the absolutely positioned ad */
+    min-height: 0;
 }
 
 .adContainer {
@@ -40,6 +37,8 @@
     text-align: center;
     background-color: #16181d;
     min-height: 50px;
+    flex-shrink: 0;
+    border-top: 1px solid #23262d;
 }
 
 .iframe {

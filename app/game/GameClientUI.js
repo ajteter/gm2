@@ -29,7 +29,8 @@ export default function GameClientUI({ game, randomPath, listPath }) {
 
     const handleAnotherGame = () => {
         // Use location.replace to navigate without adding to browser history, preventing the "back button trap".
-        window.location.replace(`${randomPath}?t=${new Date().getTime()}`);
+        const timestamp = new Date().getTime();
+        window.location.replace(`${randomPath}?t=${timestamp}`);
     };
 
     useEffect(() => {
@@ -53,14 +54,6 @@ export default function GameClientUI({ game, randomPath, listPath }) {
                         <span>More Games</span>
                     </Link>
                 </div>
-                <div className={styles.adContainer}>
-                    <ins className="adsbygoogle"
-                         style={{display: 'block', minHeight: '50px'}}
-                         data-ad-client="ca-pub-6779881482191995"
-                         data-ad-slot="7859383456"
-                         data-ad-format="auto"
-                         data-full-width-responsive="true"></ins>
-                </div>
             </div>
 
             <div className={styles.mainContent}>
@@ -70,8 +63,16 @@ export default function GameClientUI({ game, randomPath, listPath }) {
                     title={game.title}
                     allow="autoplay; fullscreen; payment"
                     allowFullScreen
-                    sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-orientation-lock"
                 />
+            </div>
+
+            <div className={styles.adContainer}>
+                <ins className="adsbygoogle"
+                     style={{display: 'block', minHeight: '50px'}}
+                     data-ad-client="ca-pub-6779881482191995"
+                     data-ad-slot="7859383456"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
             </div>
         </div>
     );

@@ -1,15 +1,23 @@
 import Link from 'next/link';
-import styles from '../../../game/game.module.css'; // Reuse styles
-import GameClientUI from '../../../game/GameClientUI'; // Reuse UI component
+import { headers } from 'next/headers';
+import styles from '../../../game/game.module.css';
+import GameClientUI from '../../../game/GameClientUI';
 import { loadGames } from '../../../lib/data';
 
-async function getRandomGame(sourceName) {
+export const revalidate = 900; // 15 minutes
+
+async function getRandomGame(sourceName, userSession) {
     try {
         const games = loadGames(sourceName);
         if (!games || games.length === 0) {
             return null;
         }
-        const randomIndex = Math.floor(Math.random() * games.length);
+        
+        // Use user session + time slot for consistent randomness per user
+        const timeSlot = Math.floor(Date.now() / (15 * 60 * 1000));
+        const seed = userSession + timeSlot;
+        const randomIndex = Math.abs(seed) % games.length;
+        
         return games[randomIndex];
     } catch (error) {
         console.error(`Failed to get random game for source ${sourceName}:`, error);
@@ -27,10 +35,19 @@ export async function generateMetadata({ params }) {
     };
 }
 
-// Accept params to get the sourceName and searchParams to force dynamic rendering
 export default async function RandomSourceGamePage({ params, searchParams }) {
     const { sourceName } = params;
-    const game = await getRandomGame(sourceName);
+    const headersList = headers();
+    
+    // Create user session from IP + User-Agent
+    const ip = headersList.get('x-forwarded-for') || headersList.get('x-real-ip') || 'unknown';
+    const userAgent = headersList.get('user-agent') || 'unknown';
+    const userSession = (ip + userAgent).split('').reduce((a, b) => {
+        a = ((a << 5) - a) + b.charCodeAt(0);
+        return a & a;
+    }, 0);
+    
+    const game = await getRandomGame(sourceName, userSession);
 
     const randomPath = `/source/${sourceName}/random`;
     const listPath = `/source/${sourceName}`;
