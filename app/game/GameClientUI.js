@@ -72,8 +72,10 @@ export default function GameClientUI({ game, randomPath, listPath }) {
                     src={game.url}
                     className={styles.iframe}
                     title={game.title}
-                    allow="autoplay; fullscreen; payment"
+                    allow="autoplay; fullscreen; payment; display-capture; camera; microphone; geolocation; accelerometer; gyroscope; magnetometer; clipboard-read; clipboard-write"
                     allowFullScreen
+                    referrerPolicy="no-referrer-when-downgrade"
+                    sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-orientation-lock allow-top-navigation-by-user-activation"
                 />
             </div>
 
