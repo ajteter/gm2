@@ -34,12 +34,15 @@ export default function GameClientUI({ game, randomPath, listPath }) {
     };
 
     useEffect(() => {
+        // Initialize AdSense
         try {
-            (window.adsbygoogle = window.adsbygoogle || []).push({});
+            if (typeof window !== 'undefined') {
+                (window.adsbygoogle = window.adsbygoogle || []).push({});
+            }
         } catch (e) {
-            console.error("AdSense push error:", e);
+            console.error("AdSense initialization error:", e);
         }
-    }, []); // Run once on mount
+    }, []);
 
     return (
         <div className={styles.container}>
@@ -68,7 +71,7 @@ export default function GameClientUI({ game, randomPath, listPath }) {
 
             <div className={styles.adContainer}>
                 <ins className="adsbygoogle"
-                     style={{display: 'block', minHeight: '50px'}}
+                     style={{display: 'block'}}
                      data-ad-client="ca-pub-6779881482191995"
                      data-ad-slot="7859383456"
                      data-ad-format="auto"
