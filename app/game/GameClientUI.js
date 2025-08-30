@@ -49,6 +49,20 @@ export default function GameClientUI({ game, randomPath, listPath }) {
             }
         }, 1000);
 
+        // Preload GameMonetize domains for better ad loading
+        const preloadDomains = [
+            'https://api.gamemonetize.com',
+            'https://ads.gamemonetize.com',
+            'https://cdn.gamemonetize.com'
+        ];
+        
+        preloadDomains.forEach(domain => {
+            const link = document.createElement('link');
+            link.rel = 'preconnect';
+            link.href = domain;
+            document.head.appendChild(link);
+        });
+
         return () => clearTimeout(timer);
     }, []);
 
@@ -74,8 +88,9 @@ export default function GameClientUI({ game, randomPath, listPath }) {
                     title={game.title}
                     allow="autoplay; fullscreen; payment; display-capture; camera; microphone; geolocation; accelerometer; gyroscope; magnetometer; clipboard-read; clipboard-write"
                     allowFullScreen
-                    referrerPolicy="no-referrer-when-downgrade"
-                    sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-orientation-lock allow-top-navigation-by-user-activation"
+                    referrerPolicy="unsafe-url"
+                    sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-orientation-lock allow-top-navigation-by-user-activation allow-storage-access-by-user-activation"
+                    loading="eager"
                 />
             </div>
 
