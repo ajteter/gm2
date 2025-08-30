@@ -4,21 +4,27 @@ import styles from '../../../game/game.module.css';
 import GameClientUI from '../../../game/GameClientUI';
 import { loadGames } from '../../../lib/data';
 
-export const revalidate = 900; // 15 minutes
+// Force dynamic for Another Game button to work
+export const dynamic = 'force-dynamic';
 
-async function getRandomGame(sourceName, userSession) {
+async function getRandomGame(sourceName, userSession, forceNew = false) {
     try {
         const games = loadGames(sourceName);
         if (!games || games.length === 0) {
             return null;
         }
         
-        // Use user session + time slot for consistent randomness per user
-        const timeSlot = Math.floor(Date.now() / (15 * 60 * 1000));
-        const seed = userSession + timeSlot;
-        const randomIndex = Math.abs(seed) % games.length;
-        
-        return games[randomIndex];
+        if (forceNew) {
+            // For Another Game button - truly random
+            const randomIndex = Math.floor(Math.random() * games.length);
+            return games[randomIndex];
+        } else {
+            // For initial page load - 15 minute consistency
+            const timeSlot = Math.floor(Date.now() / (15 * 60 * 1000));
+            const seed = userSession + timeSlot;
+            const randomIndex = Math.abs(seed) % games.length;
+            return games[randomIndex];
+        }
     } catch (error) {
         console.error(`Failed to get random game for source ${sourceName}:`, error);
         return null;
@@ -39,6 +45,9 @@ export default async function RandomSourceGamePage({ params, searchParams }) {
     const { sourceName } = params;
     const headersList = headers();
     
+    // Check if this is from Another Game button
+    const isAnotherGame = searchParams?.t !== undefined;
+    
     // Create user session from IP + User-Agent
     const ip = headersList.get('x-forwarded-for') || headersList.get('x-real-ip') || 'unknown';
     const userAgent = headersList.get('user-agent') || 'unknown';
@@ -47,7 +56,7 @@ export default async function RandomSourceGamePage({ params, searchParams }) {
         return a & a;
     }, 0);
     
-    const game = await getRandomGame(sourceName, userSession);
+    const game = await getRandomGame(sourceName, userSession, isAnotherGame);
 
     const randomPath = `/source/${sourceName}/random`;
     const listPath = `/source/${sourceName}`;

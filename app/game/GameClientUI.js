@@ -28,20 +28,28 @@ const GridIcon = () => (
 export default function GameClientUI({ game, randomPath, listPath }) {
 
     const handleAnotherGame = () => {
-        // Use location.replace to navigate without adding to browser history, preventing the "back button trap".
+        // Use location.replace to prevent back button trap in WebView
         const timestamp = new Date().getTime();
         window.location.replace(`${randomPath}?t=${timestamp}`);
     };
 
     useEffect(() => {
-        // Initialize AdSense
-        try {
-            if (typeof window !== 'undefined') {
-                (window.adsbygoogle = window.adsbygoogle || []).push({});
+        // Delay AdSense initialization to ensure DOM is ready
+        const timer = setTimeout(() => {
+            try {
+                if (typeof window !== 'undefined' && window.adsbygoogle) {
+                    console.log('Initializing AdSense...');
+                    (window.adsbygoogle = window.adsbygoogle || []).push({});
+                    console.log('AdSense initialized');
+                } else {
+                    console.warn('AdSense script not loaded');
+                }
+            } catch (e) {
+                console.error("AdSense initialization error:", e);
             }
-        } catch (e) {
-            console.error("AdSense initialization error:", e);
-        }
+        }, 1000);
+
+        return () => clearTimeout(timer);
     }, []);
 
     return (
