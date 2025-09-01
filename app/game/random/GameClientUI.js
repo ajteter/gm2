@@ -91,15 +91,15 @@ export default function GameClientUI({ game, randomPath, listPath }) {
                 <script type="text/javascript" dangerouslySetInnerHTML={{
                     __html: `
                         atOptions = {
-                            'key' : '9adddfc2b9f962e7595071bcbd5cc4e5',
+                            'key' : 'fcc762bb57d3b98bebe1d12335e8d590',
                             'format' : 'iframe',
-                            'height' : 50,
-                            'width' : 320,
+                            'height' : 90,
+                            'width' : 728,
                             'params' : {}
                         };
                     `
                 }} />
-                <script type="text/javascript" src="//www.highperformanceformat.com/9adddfc2b9f962e7595071bcbd5cc4e5/invoke.js"></script>
+                <script type="text/javascript" src="//www.highperformanceformat.com/fcc762bb57d3b98bebe1d12335e8d590/invoke.js"></script>
             </div>
         </div>
     );
