@@ -41,17 +41,18 @@ export default function GameClientUI({ game, randomPath, listPath }) {
             const hasShownPopup = sessionStorage.getItem('popupAdShown');
             
             if (!hasShownPopup) {
-                // 等待页面加载完成后触发弹出式广告
+                // WebView环境延迟3秒确保完全加载
                 const timer = setTimeout(() => {
-                    // 动态加载弹出式广告脚本
                     const script = document.createElement('script');
                     script.type = 'text/javascript';
+                    script.async = true;
+                    script.setAttribute('data-cfasync', 'false');
                     script.src = '//pl27550696.revenuecpmgate.com/e7/2b/60/e72b604475c837e80b428e839e5c9e84.js';
                     document.head.appendChild(script);
                     
                     // 标记已显示过弹出广告
                     sessionStorage.setItem('popupAdShown', 'true');
-                }, 1000);
+                }, 3000);
 
                 return () => clearTimeout(timer);
             }
