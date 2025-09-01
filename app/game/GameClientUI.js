@@ -1,8 +1,9 @@
 'use client';
 
 import Link from 'next/link';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import styles from './game.module.css';
+import { CONFIG } from '../lib/config';
 
 const DiceIcon = () => (
     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -26,30 +27,24 @@ const GridIcon = () => (
 );
 
 export default function GameClientUI({ game, randomPath, listPath }) {
+    const adContainerRef = useRef(null);
+    const preloadLinksRef = useRef([]);
 
     const handleAnotherGame = () => {
-        // Use location.replace to prevent back button trap in WebView
         const timestamp = new Date().getTime();
         window.location.replace(`${randomPath}?t=${timestamp}`);
     };
 
     useEffect(() => {
-        // Delay AdSense initialization to ensure DOM is ready
-        const timer = setTimeout(() => {
-            try {
-                if (typeof window !== 'undefined' && window.adsbygoogle) {
-                    console.log('Initializing AdSense...');
-                    (window.adsbygoogle = window.adsbygoogle || []).push({});
-                    console.log('AdSense initialized');
-                } else {
-                    console.warn('AdSense script not loaded');
-                }
-            } catch (e) {
-                console.error("AdSense initialization error:", e);
+        // 清理之前的预加载链接
+        preloadLinksRef.current.forEach(link => {
+            if (link.parentNode) {
+                link.parentNode.removeChild(link);
             }
-        }, 1000);
+        });
+        preloadLinksRef.current = [];
 
-        // Preload GameMonetize domains for better ad loading
+        // 预加载GameMonetize域名
         const preloadDomains = [
             'https://api.gamemonetize.com',
             'https://ads.gamemonetize.com',
@@ -61,9 +56,17 @@ export default function GameClientUI({ game, randomPath, listPath }) {
             link.rel = 'preconnect';
             link.href = domain;
             document.head.appendChild(link);
+            preloadLinksRef.current.push(link);
         });
 
-        return () => clearTimeout(timer);
+        return () => {
+            // 清理预加载链接
+            preloadLinksRef.current.forEach(link => {
+                if (link.parentNode) {
+                    link.parentNode.removeChild(link);
+                }
+            });
+        };
     }, []);
 
     return (
@@ -88,19 +91,32 @@ export default function GameClientUI({ game, randomPath, listPath }) {
                     title={game.title}
                     allow="autoplay; fullscreen; payment; display-capture; camera; microphone; geolocation; accelerometer; gyroscope; magnetometer; clipboard-read; clipboard-write"
                     allowFullScreen
-                    referrerPolicy="unsafe-url"
+                    referrerPolicy="no-referrer-when-downgrade"
                     sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-orientation-lock allow-top-navigation-by-user-activation allow-storage-access-by-user-activation"
                     loading="eager"
                 />
             </div>
 
-            <div className={styles.adContainer}>
-                <ins className="adsbygoogle"
-                     style={{display: 'block'}}
-                     data-ad-client="ca-pub-6779881482191995"
-                     data-ad-slot="7859383456"
-                     data-ad-format="auto"
-                     data-full-width-responsive="true"></ins>
+            <div className={styles.adContainer} ref={adContainerRef}>
+                <div id="banner-ad-container" style={{textAlign: 'center'}}>
+                    <script type="text/javascript" dangerouslySetInnerHTML={{
+                        __html: `
+                            (function() {
+                                if (!window.atOptionsLoaded) {
+                                    window.atOptions = {
+                                        'key' : '${CONFIG.ADS.BANNER.key}',
+                                        'format' : '${CONFIG.ADS.BANNER.format}',
+                                        'height' : ${CONFIG.ADS.BANNER.height},
+                                        'width' : Math.min(${CONFIG.ADS.BANNER.maxWidth}, window.innerWidth - 20),
+                                        'params' : {}
+                                    };
+                                    window.atOptionsLoaded = true;
+                                }
+                            })();
+                        `
+                    }} />
+                    <script type="text/javascript" src="https://www.highperformanceformat.com/fcc762bb57d3b98bebe1d12335e8d590/invoke.js"></script>
+                </div>
             </div>
         </div>
     );

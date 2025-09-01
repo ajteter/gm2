@@ -3,8 +3,8 @@ import { headers } from 'next/headers';
 import styles from '../../../game/game.module.css';
 import GameClientUI from '../../../game/GameClientUI';
 import { loadGames } from '../../../lib/data';
+import { CONFIG } from '../../../lib/config';
 
-// Force dynamic for Another Game button to work
 export const dynamic = 'force-dynamic';
 
 async function getRandomGame(sourceName, userSession, forceNew = false) {
@@ -15,12 +15,10 @@ async function getRandomGame(sourceName, userSession, forceNew = false) {
         }
         
         if (forceNew) {
-            // For Another Game button - truly random
             const randomIndex = Math.floor(Math.random() * games.length);
             return games[randomIndex];
         } else {
-            // For initial page load - 15 minute consistency
-            const timeSlot = Math.floor(Date.now() / (15 * 60 * 1000));
+            const timeSlot = Math.floor(Date.now() / CONFIG.RANDOM_GAME_CACHE_DURATION);
             const seed = userSession + timeSlot;
             const randomIndex = Math.abs(seed) % games.length;
             return games[randomIndex];
@@ -32,8 +30,10 @@ async function getRandomGame(sourceName, userSession, forceNew = false) {
 }
 
 export async function generateMetadata({ params }) {
+    const game = await getRandomGame(params.sourceName, 0);
     return {
-        title: `Random Game from ${params.sourceName}`,
+        title: game ? `${game.title} - Random Game` : `Random Game from ${params.sourceName}`,
+        description: game ? game.description : `Play random games from ${params.sourceName}`,
         robots: {
             index: false,
             follow: false,
@@ -45,10 +45,8 @@ export default async function RandomSourceGamePage({ params, searchParams }) {
     const { sourceName } = params;
     const headersList = headers();
     
-    // Check if this is from Another Game button
     const isAnotherGame = searchParams?.t !== undefined;
     
-    // Create user session from IP + User-Agent
     const ip = headersList.get('x-forwarded-for') || headersList.get('x-real-ip') || 'unknown';
     const userAgent = headersList.get('user-agent') || 'unknown';
     const userSession = (ip + userAgent).split('').reduce((a, b) => {

@@ -10,35 +10,17 @@ export default function RootLayout({ children }) {
 		<html>
 			<head>
 				<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-				<meta name="referrer" content="unsafe-url" />
-				<meta httpEquiv="Permissions-Policy" content="interest-cohort=(), browsing-topics=()" />
+				<meta name="referrer" content="no-referrer-when-downgrade" />
 				<meta httpEquiv="Content-Security-Policy" content="frame-ancestors 'self'; frame-src https: data:;" />
-				<link rel="preconnect" href="https://pagead2.googlesyndication.com" />
-				<link rel="preconnect" href="https://googleads.g.doubleclick.net" />
 				<link rel="preconnect" href="https://gamemonetize.com" />
 				<link rel="preconnect" href="https://html5.gamemonetize.com" />
-				<link rel="preconnect" href="https://api.gamemonetize.com" />
-				<link rel="preconnect" href="https://ads.gamemonetize.com" />
-				<link rel="dns-prefetch" href="//googleads.g.doubleclick.net" />
-				<link rel="dns-prefetch" href="//pagead2.googlesyndication.com" />
+				<link rel="preconnect" href="https://www.highperformanceformat.com" />
 				<link rel="dns-prefetch" href="//gamemonetize.com" />
-				<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6779881482191995" crossOrigin="anonymous"></script>
+				<link rel="dns-prefetch" href="//html5.gamemonetize.com" />
+				<link rel="dns-prefetch" href="//www.highperformanceformat.com" />
 			</head>
 			<body>
 				{children}
-				<script
-                    type="text/javascript"
-                    dangerouslySetInnerHTML={{
-                        __html: `
-                            var infolinks_pid = 3439661;
-                            var infolinks_wsid = 0;
-                        `,
-                    }}
-                />
-                <script
-                    type="text/javascript"
-                    src="https://resources.infolinks.com/js/infolinks_main.js"
-                ></script>
 			</body>
 		</html>
 	);

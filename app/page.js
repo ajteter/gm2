@@ -12,27 +12,43 @@ async function fetchGames(page) {
 		if (host) baseUrl = `${proto}://${host}`;
 	}
 	if (!baseUrl) {
-		return { items: [] };
+		console.error('Unable to determine base URL');
+		return { items: [], error: 'Configuration error' };
 	}
-	const url = `${baseUrl}/api/games?page=${page}`;
-	const res = await fetch(url, { next: { revalidate: 60 } });
-	if (!res.ok) return { items: [] };
+	
 	try {
-		return await res.json();
-	} catch {
-		return { items: [] };
+		const url = `${baseUrl}/api/games?page=${page}`;
+		const res = await fetch(url, { next: { revalidate: 600 } }); // 与API保持一致10分钟
+		
+		if (!res.ok) {
+			console.error(`API request failed: ${res.status} ${res.statusText}`);
+			return { items: [], error: 'Failed to load games' };
+		}
+		
+		const data = await res.json();
+		return { items: Array.isArray(data) ? data : [], error: null };
+	} catch (error) {
+		console.error('Error fetching games:', error);
+		return { items: [], error: 'Network error' };
 	}
 }
 
 export default async function Page({ searchParams }) {
 	const page = Number(searchParams?.page ?? 1) || 1;
 	const data = await fetchGames(page);
-	const items = Array.isArray(data?.items) ? data.items : (Array.isArray(data) ? data : []);
+	const items = data.items || [];
+	const error = data.error;
 
 	return (
 		<main className="container">
 			<GameList items={items} />
-			{(!items || items.length === 0) && (
+			{error && (
+				<div className="empty">
+					<div className="emptyIcon" aria-hidden="true" />
+					<p className="emptyText">{error}</p>
+				</div>
+			)}
+			{(!items || items.length === 0) && !error && (
 				<div className="empty">
 					<div className="emptyIcon" aria-hidden="true" />
 					<p className="emptyText">暂时无法加载，请稍后重试</p>
