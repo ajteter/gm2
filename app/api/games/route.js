@@ -1,4 +1,4 @@
-import portraitGames from '../../lib/gmbestvertical.json';
+import { getActiveGames } from '../../lib/data';
 import { CONFIG } from '../../lib/config';
 
 export const runtime = 'edge';
@@ -8,9 +8,10 @@ export async function GET(request) {
 	const page = Number(searchParams.get('page') || '1') || 1;
 	const pageSize = CONFIG.PAGE_SIZE;
 
+	const allGames = getActiveGames();
 	const start = (page - 1) * pageSize;
 	const end = start + pageSize;
-	const items = portraitGames.slice(start, end);
+	const items = allGames.slice(start, end);
 
 	return new Response(JSON.stringify(items), {
 		headers: {

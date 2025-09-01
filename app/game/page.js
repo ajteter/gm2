@@ -1,51 +1,72 @@
 import Link from 'next/link';
-import styles from './game.module.css';
-import GameClientUI from './GameClientUI';
-import portraitGames from '../lib/gmbestvertical.json';
-
-// This function now reads from the pre-filtered local JSON file.
-async function getRandomGame() {
-    try {
-        if (portraitGames.length === 0) {
-            console.error("No games found in gmbestvertical.json");
-            return null;
-        }
-
-        // Select a random game from the list
-        const randomIndex = Math.floor(Math.random() * portraitGames.length);
-        return portraitGames[randomIndex];
-
-    } catch (error) {
-        console.error("Failed to get random game from local file:", error);
-        return null;
-    }
-}
+import GameList from '../components/GameList';
+import { headers } from 'next/headers';
 
 export const metadata = {
-    title: 'Random Game',
-    robots: {
-        index: false,
-        follow: false,
-    },
+	title: 'Free HTML5 Games',
+	description: 'Browse and play free HTML5 games. Mobile-optimized games that load fast in any browser.',
+	alternates: {
+		canonical: '/game',
+	},
 };
 
-// By accepting searchParams, we are telling Next.js to treat this as a dynamic page.
-// This ensures the page is re-rendered on every request, allowing a new random game to be selected.
-export default async function RandomGamePage({ searchParams }) {
-    const game = await getRandomGame();
+async function fetchGames(page) {
+	const envBase = process.env.NEXT_PUBLIC_SITE_URL;
+	let baseUrl = envBase;
+	if (!baseUrl) {
+		const h = headers();
+		const host = h.get('x-forwarded-host') || h.get('host');
+		const proto = h.get('x-forwarded-proto') || 'https';
+		if (host) baseUrl = `${proto}://${host}`;
+	}
+	if (!baseUrl) {
+		console.error('Unable to determine base URL');
+		return { items: [], error: 'Configuration error' };
+	}
+	
+	try {
+		const url = `${baseUrl}/api/games?page=${page}`;
+		const res = await fetch(url, { next: { revalidate: 600 } }); // 与API保持一致10分钟
+		
+		if (!res.ok) {
+			console.error(`API request failed: ${res.status} ${res.statusText}`);
+			return { items: [], error: 'Failed to load games' };
+		}
+		
+		const data = await res.json();
+		return { items: Array.isArray(data) ? data : [], error: null };
+	} catch (error) {
+		console.error('Error fetching games:', error);
+		return { items: [], error: 'Network error' };
+	}
+}
 
-    if (!game || !game.url) {
-        return (
-            <div className={styles.container}>
-                <div className={styles.error}>
-                    <p>Could not load a game at the moment. Please try again.</p>
-                    <div className={styles.header}>
-                         <Link href="/" className={styles.actionButton}>More Games</Link>
-                    </div>
-                </div>
-            </div>
-        );
-    }
+export default async function Page({ searchParams }) {
+	const page = Number(searchParams?.page ?? 1) || 1;
+	const data = await fetchGames(page);
+	const items = data.items || [];
+	const error = data.error;
 
-    return <GameClientUI game={game} randomPath="/game" listPath="/" />;
+	return (
+		<main className="container">
+			<GameList items={items} />
+			{error && (
+				<div className="empty">
+					<div className="emptyIcon" aria-hidden="true" />
+					<p className="emptyText">{error}</p>
+				</div>
+			)}
+			{(!items || items.length === 0) && !error && (
+				<div className="empty">
+					<div className="emptyIcon" aria-hidden="true" />
+					<p className="emptyText">暂时无法加载，请稍后重试</p>
+				</div>
+			)}
+			<div className="pagination">
+				<Link href={`/game?page=${Math.max(1, page - 1)}`} prefetch className="pageBtn iconBtn" aria-disabled={page <= 1} aria-label="上一页" />
+				<span className="pageDot" aria-hidden="true" />
+				<Link href={`/game?page=${page + 1}`} prefetch className="pageBtn iconBtn" aria-label="下一页" />
+			</div>
+		</main>
+	);
 }

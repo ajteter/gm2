@@ -1,5 +1,8 @@
 // 应用配置常量
 export const CONFIG = {
+    // 当前激活的游戏源 ('gmbestvertical' or 'gpvertical')
+    ACTIVE_GAMES_SOURCE: 'gpvertical',
+
     // 分页配置
     PAGE_SIZE: 50,
     

@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import GameCard from '../../components/GameCard';
 import { loadGames } from '../../lib/data';
+import { CONFIG } from '../../lib/config';
 
 export async function generateMetadata({ params }) {
     return {
@@ -24,7 +25,7 @@ export default async function SourceListPage({ params, searchParams }) {
     }
 
     const page = Number(searchParams?.page ?? 1) || 1;
-    const pageSize = 50;
+    const pageSize = CONFIG.PAGE_SIZE;
     const start = (page - 1) * pageSize;
     const end = start + pageSize;
     const items = allGames.slice(start, end);

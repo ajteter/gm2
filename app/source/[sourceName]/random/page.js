@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { headers } from 'next/headers';
-import styles from '../../../game/game.module.css';
-import GameClientUI from '../../../game/GameClientUI';
+import styles from '../../../game/random/game.module.css';
+import GameClientUI from '../../../game/random/GameClientUI';
 import { loadGames } from '../../../lib/data';
 import { CONFIG } from '../../../lib/config';
 
