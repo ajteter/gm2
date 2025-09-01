@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { useEffect } from 'react';
 import styles from './game.module.css';
 
 const DiceIcon = () => (
@@ -30,6 +31,33 @@ export default function GameClientUI({ game, randomPath, listPath }) {
         window.location.replace(`${randomPath}?t=${timestamp}`);
     };
 
+    useEffect(() => {
+        // 检查是否是从Another Game按钮跳转过来的
+        const urlParams = new URLSearchParams(window.location.search);
+        const isFromAnotherGame = urlParams.has('t');
+        
+        if (isFromAnotherGame) {
+            // 检查是否已经显示过弹出广告
+            const hasShownPopup = sessionStorage.getItem('popupAdShown');
+            
+            if (!hasShownPopup) {
+                // 等待页面加载完成后触发弹出式广告
+                const timer = setTimeout(() => {
+                    // 动态加载弹出式广告脚本
+                    const script = document.createElement('script');
+                    script.type = 'text/javascript';
+                    script.src = '//pl27550696.revenuecpmgate.com/e7/2b/60/e72b604475c837e80b428e839e5c9e84.js';
+                    document.head.appendChild(script);
+                    
+                    // 标记已显示过弹出广告
+                    sessionStorage.setItem('popupAdShown', 'true');
+                }, 1000);
+
+                return () => clearTimeout(timer);
+            }
+        }
+    }, []);
+
     return (
         <div className={styles.container}>
             <div className={styles.header}>
@@ -54,11 +82,23 @@ export default function GameClientUI({ game, randomPath, listPath }) {
                     allowFullScreen
                     referrerPolicy="no-referrer-when-downgrade"
                     loading="eager"
+                    muted
                 />
             </div>
 
             <div className={styles.adContainer}>
-                <script type='text/javascript' src='//pl27551037.revenuecpmgate.com/03/a1/9b/03a19b3d8feca31b7c8585d13e143736.js'></script>
+                <script type="text/javascript" dangerouslySetInnerHTML={{
+                    __html: `
+                        atOptions = {
+                            'key' : '3c5f1a4eaca07385fc217a28949de1d9',
+                            'format' : 'iframe',
+                            'height' : 60,
+                            'width' : 468,
+                            'params' : {}
+                        };
+                    `
+                }} />
+                <script type="text/javascript" src="//www.highperformanceformat.com/3c5f1a4eaca07385fc217a28949de1d9/invoke.js"></script>
             </div>
         </div>
     );
