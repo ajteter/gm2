@@ -63,51 +63,16 @@ export default function GameClientUI({ game, randomPath, listPath }) {
             <div className={styles.adContainer}>
                 <script type="text/javascript" dangerouslySetInnerHTML={{
                     __html: `
-                        (function() {
-                            const screenWidth = window.innerWidth;
-                            const banners = ${JSON.stringify(CONFIG.ADS.BANNER)};
-                            let adConfig;
-                            let scriptKey;
-                            
-                            if (screenWidth >= banners.LARGE.minScreenWidth) {
-                                adConfig = {
-                                    'key': banners.LARGE.key,
-                                    'format': 'iframe',
-                                    'height': banners.LARGE.height,
-                                    'width': banners.LARGE.width,
-                                    'params': {}
-                                };
-                                scriptKey = banners.LARGE.key;
-                            } else if (screenWidth >= banners.MEDIUM.minScreenWidth) {
-                                adConfig = {
-                                    'key': banners.MEDIUM.key,
-                                    'format': 'iframe',
-                                    'height': banners.MEDIUM.height,
-                                    'width': banners.MEDIUM.width,
-                                    'params': {}
-                                };
-                                scriptKey = banners.MEDIUM.key;
-                            } else {
-                                adConfig = {
-                                    'key': banners.SMALL.key,
-                                    'format': 'iframe',
-                                    'height': banners.SMALL.height,
-                                    'width': banners.SMALL.width,
-                                    'params': {}
-                                };
-                                scriptKey = banners.SMALL.key;
-                            }
-                            
-                            window.atOptions = adConfig;
-                            
-                            // 动态加载对应的广告脚本
-                            const script = document.createElement('script');
-                            script.type = 'text/javascript';
-                            script.src = '//www.highperformanceformat.com/' + scriptKey + '/invoke.js';
-                            document.head.appendChild(script);
-                        })();
+                        window.atOptions = {
+                            'key': '${CONFIG.ADS.FIXED_BANNER.key}',
+                            'format': 'iframe',
+                            'height': 90,
+                            'width': 728,
+                            'params': {}
+                        };
                     `
                 }} />
+                <script type="text/javascript" src={`${CONFIG.ADS.DOMAINS.highPerformance}/${CONFIG.ADS.FIXED_BANNER.key}/invoke.js`}></script>
             </div>
         </div>
     );

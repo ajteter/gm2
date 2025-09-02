@@ -18,7 +18,12 @@ export const CONFIG = {
             delay: 3000 // 3秒延迟
         },
         
-        // 响应式横幅广告
+        // 固定横幅广告 (等比例缩放到设备宽度)
+        FIXED_BANNER: {
+            key: 'fcc762bb57d3b98bebe1d12335e8d590'
+        },
+        
+        // 响应式横幅广告 (备用配置)
         BANNER: {
             LARGE: {
                 key: 'fcc762bb57d3b98bebe1d12335e8d590',

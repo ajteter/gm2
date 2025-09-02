@@ -39,6 +39,13 @@
     min-height: 50px;
     flex-shrink: 0;
     border-top: 1px solid #23262d;
+    overflow: hidden;
+}
+
+.adContainer iframe {
+    max-width: 100% !important;
+    height: auto !important;
+    transform-origin: top center;
 }
 
 .iframe {
