@@ -32,6 +32,39 @@ export default function GameClientUI({ game, randomPath, listPath }) {
         window.location.replace(`${randomPath}?t=${timestamp}`);
     };
 
+    useEffect(() => {
+        // 检测页面URL变化，显示返回按钮
+        const checkForAdRedirect = () => {
+            if (window.location.href !== window.location.origin + '/game/random' && 
+                !window.location.href.includes('/game/random?t=')) {
+                // 页面被广告重定向，显示返回提示
+                const returnButton = document.createElement('div');
+                returnButton.innerHTML = `
+                    <div style="position: fixed; top: 10px; left: 10px; z-index: 9999; 
+                                background: #000; color: #fff; padding: 10px 15px; 
+                                border-radius: 5px; cursor: pointer; font-size: 14px;
+                                box-shadow: 0 2px 10px rgba(0,0,0,0.5);">
+                        ← 返回游戏
+                    </div>
+                `;
+                returnButton.onclick = () => {
+                    window.history.back();
+                };
+                document.body.appendChild(returnButton);
+            }
+        };
+
+        // 延迟检测，给广告时间加载
+        setTimeout(checkForAdRedirect, 2000);
+        
+        // 监听页面变化
+        window.addEventListener('beforeunload', checkForAdRedirect);
+        
+        return () => {
+            window.removeEventListener('beforeunload', checkForAdRedirect);
+        };
+    }, []);
+
     return (
         <div className={styles.container}>
             <div className={styles.header}>
@@ -80,23 +113,12 @@ export default function GameClientUI({ game, randomPath, listPath }) {
                                     'width': 728,
                                     'params': {}
                                 };
-                                
-                                // 点击延迟处理
-                                document.addEventListener('click', function(e) {
-                                    const link = e.target.closest('a');
-                                    if (link && link.href) {
-                                        e.preventDefault();
-                                        setTimeout(function() {
-                                            window.open(link.href, '_blank');
-                                        }, 150);
-                                    }
-                                });
                             </script>
                             <script type="text/javascript" src="${CONFIG.ADS.DOMAINS.highPerformance}/${CONFIG.ADS.FIXED_BANNER.key}/invoke.js"></script>
                         </body>
                         </html>
                     `}
-                    sandbox="allow-scripts allow-same-origin allow-popups"
+                    sandbox="allow-scripts allow-same-origin allow-top-navigation-by-user-activation allow-popups"
                     style={{
                         width: '100%',
                         height: '90px',
