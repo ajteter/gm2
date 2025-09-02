@@ -43,6 +43,9 @@
     overflow: hidden;
     position: relative;
     z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .adContainer * {
@@ -56,9 +59,11 @@
     width: 100% !important;
     height: auto !important;
     max-height: 90px !important;
-    transform-origin: top center;
+    max-width: 320px !important;
+    transform-origin: center center;
     display: block !important;
     position: static !important;
+    margin: 0 auto;
 }
 
 /* 针对xhdpi/xxhdpi设备的媒体查询 */
