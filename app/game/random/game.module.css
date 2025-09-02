@@ -37,15 +37,41 @@
     text-align: center;
     background-color: #16181d;
     min-height: 50px;
+    max-height: 90px;
     flex-shrink: 0;
     border-top: 1px solid #23262d;
     overflow: hidden;
+    position: relative;
+    z-index: 1;
+}
+
+.adContainer * {
+    max-width: 100% !important;
+    max-height: 90px !important;
+    position: relative !important;
+    z-index: auto !important;
 }
 
 .adContainer iframe {
-    max-width: 100% !important;
+    width: 100% !important;
     height: auto !important;
+    max-height: 90px !important;
     transform-origin: top center;
+    display: block !important;
+    position: static !important;
+}
+
+/* 针对xhdpi/xxhdpi设备的媒体查询 */
+@media screen and (max-width: 414px) {
+    .adContainer {
+        max-height: 60px;
+        padding: 5px;
+    }
+    
+    .adContainer *,
+    .adContainer iframe {
+        max-height: 50px !important;
+    }
 }
 
 .iframe {
