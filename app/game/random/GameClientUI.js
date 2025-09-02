@@ -35,33 +35,40 @@ export default function GameClientUI({ game, randomPath, listPath }) {
     useEffect(() => {
         // 检测页面URL变化，显示返回按钮
         const checkForAdRedirect = () => {
-            if (window.location.href !== window.location.origin + '/game/random' && 
-                !window.location.href.includes('/game/random?t=')) {
-                // 页面被广告重定向，显示返回提示
-                const returnButton = document.createElement('div');
-                returnButton.innerHTML = `
-                    <div style="position: fixed; top: 10px; left: 10px; z-index: 9999; 
-                                background: #000; color: #fff; padding: 10px 15px; 
-                                border-radius: 5px; cursor: pointer; font-size: 14px;
-                                box-shadow: 0 2px 10px rgba(0,0,0,0.5);">
-                        ← 返回游戏
-                    </div>
-                `;
-                returnButton.onclick = () => {
-                    window.history.back();
-                };
-                document.body.appendChild(returnButton);
+            const currentUrl = window.location.href;
+            const isGamePage = currentUrl.includes('/game/random') || currentUrl.includes('/game');
+            
+            // 只在非游戏页面显示返回按钮
+            if (!isGamePage) {
+                // 检查是否已经有返回按钮
+                if (!document.getElementById('game-return-btn')) {
+                    const returnButton = document.createElement('div');
+                    returnButton.id = 'game-return-btn';
+                    returnButton.innerHTML = `
+                        <div style="position: fixed; top: 50px; left: 15px; z-index: 9999; 
+                                    background: rgba(0,0,0,0.8); color: #fff; 
+                                    width: 40px; height: 40px; border-radius: 20px; 
+                                    cursor: pointer; display: flex; align-items: center; 
+                                    justify-content: center; font-size: 18px; font-weight: bold;
+                                    box-shadow: 0 2px 10px rgba(0,0,0,0.5); backdrop-filter: blur(4px);">
+                            ←
+                        </div>
+                    `;
+                    returnButton.onclick = () => {
+                        window.history.back();
+                    };
+                    document.body.appendChild(returnButton);
+                }
             }
         };
 
         // 延迟检测，给广告时间加载
-        setTimeout(checkForAdRedirect, 2000);
-        
-        // 监听页面变化
-        window.addEventListener('beforeunload', checkForAdRedirect);
+        setTimeout(checkForAdRedirect, 3000);
         
         return () => {
-            window.removeEventListener('beforeunload', checkForAdRedirect);
+            // 清理返回按钮
+            const btn = document.getElementById('game-return-btn');
+            if (btn) btn.remove();
         };
     }, []);
 
