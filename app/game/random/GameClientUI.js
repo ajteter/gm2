@@ -33,13 +33,17 @@ export default function GameClientUI({ game, randomPath, listPath }) {
     };
 
     useEffect(() => {
-        // 检测页面URL变化，显示返回按钮
+        // 持续监控URL变化
         const checkForAdRedirect = () => {
             const currentUrl = window.location.href;
-            const isGamePage = currentUrl.includes('/game/random') || currentUrl.includes('/game');
+            console.log('检测URL:', currentUrl);
             
-            // 只在非游戏页面显示返回按钮
-            if (!isGamePage) {
+            // 简化检测：如果URL不包含我们的域名游戏路径，就显示返回按钮
+            const isOurGamePage = currentUrl.includes('/game');
+            console.log('是否为游戏页面:', isOurGamePage);
+            
+            if (!isOurGamePage) {
+                console.log('显示返回按钮');
                 // 检查是否已经有返回按钮
                 if (!document.getElementById('game-return-btn')) {
                     const returnButton = document.createElement('div');
@@ -55,18 +59,23 @@ export default function GameClientUI({ game, randomPath, listPath }) {
                         </div>
                     `;
                     returnButton.onclick = () => {
+                        console.log('点击返回按钮');
                         window.history.back();
                     };
                     document.body.appendChild(returnButton);
+                    console.log('返回按钮已添加');
                 }
             }
         };
 
-        // 延迟检测，给广告时间加载
-        setTimeout(checkForAdRedirect, 3000);
+        // 多次检测确保捕获到跳转
+        const intervals = [1000, 2000, 3000, 5000];
+        const timers = intervals.map(delay => 
+            setTimeout(checkForAdRedirect, delay)
+        );
         
         return () => {
-            // 清理返回按钮
+            timers.forEach(timer => clearTimeout(timer));
             const btn = document.getElementById('game-return-btn');
             if (btn) btn.remove();
         };
