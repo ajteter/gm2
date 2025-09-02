@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useEffect } from 'react';
 import styles from './game.module.css';
+import { CONFIG } from '../../lib/config';
 
 const DiceIcon = () => (
     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -30,34 +31,6 @@ export default function GameClientUI({ game, randomPath, listPath }) {
         const timestamp = new Date().getTime();
         window.location.replace(`${randomPath}?t=${timestamp}`);
     };
-
-    useEffect(() => {
-        // 检查是否是从Another Game按钮跳转过来的
-        const urlParams = new URLSearchParams(window.location.search);
-        const isFromAnotherGame = urlParams.has('t');
-        
-        if (isFromAnotherGame) {
-            // 检查是否已经显示过弹出广告
-            const hasShownPopup = sessionStorage.getItem('popupAdShown');
-            
-            if (!hasShownPopup) {
-                // WebView环境延迟3秒确保完全加载
-                const timer = setTimeout(() => {
-                    const script = document.createElement('script');
-                    script.type = 'text/javascript';
-                    script.async = true;
-                    script.setAttribute('data-cfasync', 'false');
-                    script.src = '//pl27550696.revenuecpmgate.com/e7/2b/60/e72b604475c837e80b428e839e5c9e84.js';
-                    document.head.appendChild(script);
-                    
-                    // 标记已显示过弹出广告
-                    sessionStorage.setItem('popupAdShown', 'true');
-                }, 3000);
-
-                return () => clearTimeout(timer);
-            }
-        }
-    }, []);
 
     return (
         <div className={styles.container}>
@@ -90,16 +63,42 @@ export default function GameClientUI({ game, randomPath, listPath }) {
             <div className={styles.adContainer}>
                 <script type="text/javascript" dangerouslySetInnerHTML={{
                     __html: `
-                        atOptions = {
-                            'key' : 'fcc762bb57d3b98bebe1d12335e8d590',
-                            'format' : 'iframe',
-                            'height' : 90,
-                            'width' : 728,
-                            'params' : {}
-                        };
+                        (function() {
+                            const screenWidth = window.innerWidth;
+                            const banners = ${JSON.stringify(CONFIG.ADS.BANNER)};
+                            let adConfig;
+                            
+                            if (screenWidth >= banners.LARGE.minScreenWidth) {
+                                adConfig = {
+                                    'key': banners.LARGE.key,
+                                    'format': 'iframe',
+                                    'height': banners.LARGE.height,
+                                    'width': banners.LARGE.width,
+                                    'params': {}
+                                };
+                            } else if (screenWidth >= banners.MEDIUM.minScreenWidth) {
+                                adConfig = {
+                                    'key': banners.MEDIUM.key,
+                                    'format': 'iframe',
+                                    'height': banners.MEDIUM.height,
+                                    'width': banners.MEDIUM.width,
+                                    'params': {}
+                                };
+                            } else {
+                                adConfig = {
+                                    'key': banners.SMALL.key,
+                                    'format': 'iframe',
+                                    'height': banners.SMALL.height,
+                                    'width': banners.SMALL.width,
+                                    'params': {}
+                                };
+                            }
+                            
+                            window.atOptions = adConfig;
+                        })();
                     `
                 }} />
-                <script type="text/javascript" src="//www.highperformanceformat.com/fcc762bb57d3b98bebe1d12335e8d590/invoke.js"></script>
+                <script type="text/javascript" src={`${CONFIG.ADS.DOMAINS.highPerformance}/${CONFIG.ADS.BANNER.LARGE.key}/invoke.js`}></script>
             </div>
         </div>
     );
