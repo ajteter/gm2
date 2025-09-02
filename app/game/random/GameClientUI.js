@@ -85,7 +85,7 @@ export default function GameClientUI({ game, randomPath, listPath }) {
                         </body>
                         </html>
                     `}
-                    sandbox="allow-scripts allow-same-origin"
+                    sandbox="allow-scripts allow-same-origin allow-top-navigation-by-user-activation allow-popups"
                     style={{
                         width: '100%',
                         height: '90px',
