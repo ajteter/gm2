@@ -20,7 +20,7 @@ export const CONFIG = {
         
         // 固定横幅广告 (等比例缩放到设备宽度)
         FIXED_BANNER: {
-            key: 'fcc762bb57d3b98bebe1d12335e8d590'
+            key: '3c5f1a4eaca07385fc217a28949de1d9'
         },
         
         // 响应式横幅广告 (备用配置)
