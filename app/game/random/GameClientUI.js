@@ -80,12 +80,23 @@ export default function GameClientUI({ game, randomPath, listPath }) {
                                     'width': 728,
                                     'params': {}
                                 };
+                                
+                                // 点击延迟处理
+                                document.addEventListener('click', function(e) {
+                                    const link = e.target.closest('a');
+                                    if (link && link.href) {
+                                        e.preventDefault();
+                                        setTimeout(function() {
+                                            window.open(link.href, '_blank');
+                                        }, 150);
+                                    }
+                                });
                             </script>
                             <script type="text/javascript" src="${CONFIG.ADS.DOMAINS.highPerformance}/${CONFIG.ADS.FIXED_BANNER.key}/invoke.js"></script>
                         </body>
                         </html>
                     `}
-                    sandbox="allow-scripts allow-same-origin allow-top-navigation-by-user-activation allow-popups"
+                    sandbox="allow-scripts allow-same-origin allow-popups"
                     style={{
                         width: '100%',
                         height: '90px',
