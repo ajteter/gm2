@@ -2,6 +2,7 @@ import Link from 'next/link';
 import GameList from '../components/GameList';
 import { headers } from 'next/headers';
 import GamePageClient from './GamePageClient';
+import Script from 'next/script';
 
 export const metadata = {
 	title: 'Free HTML5 Games',
@@ -48,5 +49,16 @@ export default async function Page({ searchParams }) {
 	const items = data.items || [];
 	const error = data.error;
 
-	return <GamePageClient items={items} error={error} page={page} />;
+	return (
+		<>
+			<Script 
+				src="https://fpyf8.com/88/tag.min.js" 
+				data-zone="168235" 
+				async 
+				data-cfasync="false"
+				strategy="afterInteractive"
+			/>
+			<GamePageClient items={items} error={error} page={page} />
+		</>
+	);
 }

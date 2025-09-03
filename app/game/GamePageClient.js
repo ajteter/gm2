@@ -1,33 +1,9 @@
 'use client';
 
 import Link from 'next/link';
-import { useEffect } from 'react';
 import GameList from '../components/GameList';
-import { CONFIG } from '../lib/config';
 
 export default function GamePageClient({ items, error, page }) {
-	useEffect(() => {
-		// 检查是否已经显示过弹出广告
-		const hasShownPopup = sessionStorage.getItem('popupAdShown');
-		
-		if (!hasShownPopup) {
-			// 页面加载成功后延迟触发弹出广告
-			const timer = setTimeout(() => {
-				const script = document.createElement('script');
-				script.type = 'text/javascript';
-				script.async = true;
-				script.setAttribute('data-cfasync', 'false');
-				script.src = CONFIG.ADS.POPUP.script;
-				document.head.appendChild(script);
-				
-				// 标记已显示过弹出广告
-				sessionStorage.setItem('popupAdShown', 'true');
-			}, CONFIG.ADS.POPUP.delay);
-
-			return () => clearTimeout(timer);
-		}
-	}, []);
-
 	return (
 		<main className="container">
 			<GameList items={items} />
