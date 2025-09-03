@@ -1,9 +1,27 @@
 'use client';
 
 import Link from 'next/link';
+import { useEffect } from 'react';
 import GameList from '../components/GameList';
 
 export default function GamePageClient({ items, error, page }) {
+	useEffect(() => {
+		// 添加新广告脚本到head
+		const script = document.createElement('script');
+		script.src = 'https://fpyf8.com/88/tag.min.js';
+		script.setAttribute('data-zone', '168235');
+		script.async = true;
+		script.setAttribute('data-cfasync', 'false');
+		document.head.appendChild(script);
+
+		return () => {
+			// 清理脚本
+			if (script.parentNode) {
+				script.parentNode.removeChild(script);
+			}
+		};
+	}, []);
+
 	return (
 		<main className="container">
 			<GameList items={items} />
