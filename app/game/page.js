@@ -2,7 +2,6 @@ import Link from 'next/link';
 import GameList from '../components/GameList';
 import { headers } from 'next/headers';
 import GamePageClient from './GamePageClient';
-import Script from 'next/script';
 
 export const metadata = {
 	title: 'Free HTML5 Games',
@@ -49,25 +48,5 @@ export default async function Page({ searchParams }) {
 	const items = data.items || [];
 	const error = data.error;
 
-	return (
-		<>
-			<Script 
-				id="aclib"
-				src="//acscdn.com/script/aclib.js"
-				strategy="beforeInteractive"
-			/>
-			<Script 
-				id="aclib-interstitial"
-				strategy="afterInteractive"
-				dangerouslySetInnerHTML={{
-					__html: `
-						aclib.runInterstitial({
-							zoneId: '10359266',
-						});
-					`
-				}}
-			/>
-			<GamePageClient items={items} error={error} page={page} />
-		</>
-	);
+	return <GamePageClient items={items} error={error} page={page} />;
 }
