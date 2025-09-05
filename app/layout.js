@@ -79,13 +79,6 @@ export default function RootLayout({ children }) {
 			</head>
 			<body>
 				{children}
-				<script type="text/javascript" dangerouslySetInnerHTML={{
-					__html: `
-						aclib.runAutoTag({
-							zoneId: 'peoz0xzgj2',
-						});
-					`
-				}} />
 			</body>
 		</html>
 	);
