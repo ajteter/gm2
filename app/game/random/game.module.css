@@ -48,6 +48,20 @@
     justify-content: center;
 }
 
+.adBanner {
+    width: 100%;
+    max-width: 300px;
+    max-height: 100px;
+    overflow: hidden;
+    position: relative;
+}
+
+.adBanner * {
+    max-width: 300px !important;
+    max-height: 100px !important;
+    position: relative !important;
+}
+
 .adContainer * {
     max-width: 100% !important;
     max-height: 100px !important;
@@ -73,6 +87,11 @@
         padding: 5px;
     }
     
+    .adBanner {
+        max-height: 60px;
+    }
+    
+    .adBanner *,
     .adContainer *,
     .adContainer iframe {
         max-height: 60px !important;
