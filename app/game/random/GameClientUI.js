@@ -110,16 +110,39 @@ export default function GameClientUI({ game, randomPath, listPath }) {
             </div>
 
             <div className={styles.adContainer}>
-                <script id="aclib" type="text/javascript" src="//acscdn.com/script/aclib.js"></script>
-                <div className={styles.adBanner}>
-                    <script type="text/javascript" dangerouslySetInnerHTML={{
-                        __html: `
-                            aclib.runBanner({
-                                zoneId: '10358702',
-                            });
-                        `
-                    }} />
-                </div>
+                <iframe 
+                    srcDoc={`
+                        <!DOCTYPE html>
+                        <html>
+                        <head>
+                            <style>
+                                body { margin: 0; padding: 0; overflow: hidden; }
+                                * { max-width: 100% !important; max-height: 100px !important; }
+                            </style>
+                        </head>
+                        <body>
+                            <script type="text/javascript">
+                                window.atOptions = {
+                                    'key': '${CONFIG.ADS.FIXED_BANNER.key}',
+                                    'format': 'iframe',
+                                    'height': 50,
+                                    'width': 320,
+                                    'params': {}
+                                };
+                            </script>
+                            <script type="text/javascript" src="${CONFIG.ADS.DOMAINS.highPerformance}/${CONFIG.ADS.FIXED_BANNER.key}/invoke.js"></script>
+                        </body>
+                        </html>
+                    `}
+                    sandbox="allow-scripts allow-same-origin allow-top-navigation-by-user-activation allow-popups"
+                    style={{
+                        width: '100%',
+                        height: '100px',
+                        border: 'none',
+                        maxHeight: '100px',
+                        overflow: 'hidden'
+                    }}
+                />
             </div>
         </div>
     );
